@@ -1,0 +1,86 @@
+#packopt name　"Programming Assistant ver 2.0"
+screen 0,300,500
+*statap
+	cls 4
+	color 255,255,255
+	title "Programming Assistant ver 2.0"
+	mes "ツールを選択してください。"
+	pos 40,30
+	objsize 200,25
+	button "マウスポジション表示",*karennto
+	button "長さ測定",*nagasa
+	button "ペイントツール",*peint
+	button "解像度などの画面情報",*scree
+	button "キーの確認",*keyput
+	stop
+*karennto
+	cls 4
+	color 255,255,255
+	button "戻る",*statap
+	repeat
+	pos 0,0
+	color 0,0,0
+	redraw 0
+	boxf
+	await 20
+	x=ginfo_mx
+	y=ginfo_my
+	pos 0,25
+	color 255,255,255
+	mes "x"+x+",y"+y+"
+	redraw 1
+	loop
+	stop
+*peint
+	exec "mspaint"
+	stop
+*scree
+	cls 4
+	color 255,255,255
+	button "戻る",*statap
+	mes "画面サイズ:x"+ginfo(20)+",y"+ginfo(21)+""
+	stop
+*nagasa
+	cls 4
+	color 255,255,255
+	button "戻る",*statap
+	pos 0,30
+	mes "A地点でEnterキーを押してください\n(右下地点)"
+	ax=0
+	ay=0
+	repeat
+	await 16
+	stick kii,0
+	if kii=32:ax=ginfo_mx:ay=ginfo_my:break
+	loop
+	color 0,0,0
+	pos 0,0
+	boxf
+	pos 0,30
+	color 255,255,255
+	mes "B地点でEnterキーを押してください\n（左上地点）"
+	mes " A地点:x"+ax+",y"+ay+""
+	bx=0
+	by=0
+	repeat
+	await 16
+	stick kii,0
+	if kii=32:bx=ginfo_mx:by=ginfo_my:break
+	loop
+	color 0,0,0
+	pos 0,0
+	boxf
+	pos 0,30
+	color 255,255,255
+	mes "計測結果"
+	mes " A地点:x"+ax+",y"+ay+""
+	mes " B地点:x"+bx+",y"+by+""
+	abx=ax-bx
+	aby=ay-by
+	mes " 右下x-左上x:"+abx+""
+	mes " 右下y-左上y:"+aby+""
+	stop
+*keyput
+	cls 4
+	color 255,255,255
+	button "戻る",*statap
